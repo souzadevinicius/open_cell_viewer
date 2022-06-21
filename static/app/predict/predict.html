@@ -1,0 +1,72 @@
+<div layout="row" layout-align="start start">
+  <md-radio-group ng-model="operation" ng-init="operation = 'train'">
+    <label>Choose operation &nbsp;&nbsp;&nbsp;</label>
+    <md-radio-button value="train" class="md-primary" style="display: inline">Train</md-radio-button>
+    <md-radio-button value="predict" style="display: inline"> Predict</md-radio-button>
+  </md-radio-group>
+</div>
+
+<div ng-show="Pred.trainedTypes.length > 0 && operation == 'predict'">
+  <h1>Predict</h1>
+  <form ng-submit="Pred.uploadPredictFile()">
+    <color-map colormap="Pred.cm" change="Pred.uploadPredictFile()" ng-init="Pred.cm = Pred.cm || ''"></color-map>
+    <div layout-gt-sm="row">
+      <div flex="60"></div>
+      <div class="md-block" md-no-float="" flex="20">
+        <input class="ng-hide" id="predict[]" multiple type="file" ng-file="predict" autofocus="autofocus" multiple="" ng-init="predict = []" />
+        <label for="predict[]" class="md-button md-raised md-primary">Choose Predict Image</label>
+      </div>
+      <div layout="column" layout-align="start center" flex="20">
+        <md-button class="md-icon-button md-button md-raised md-primary md-mini" aria-label="Done" type="submit" ng-submit="Pred.uploadPredictFile()" ng-disabled="predict.length == 0">
+          <md-icon>done</md-icon>
+        </md-button>
+      </div>
+    </div>
+  </form>
+</div>
+<div ng-show="operation == 'train'">
+  <h1>Upload Train Images</h1>
+  <form ng-submit="Pred.uploadTrainFile()">
+    <color-map colormap="Pred.cm" change="Pred.uploadTrainFile()" ng-init="Pred.cm = Pred.cm || ''"></color-map>
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" md-no-float="" flex="60">
+        <label>Image Type</label>
+        <input ng-model="Pred.categoryName" ng-init="Pred.categoryName = ''" required>
+      </md-input-container>
+      <div class="md-block" md-no-float="" flex="20">
+        <input class="ng-hide" id="train[]" multiple type="file" ng-file="train" autofocus="autofocus" multiple="" ng-init="train = []" />
+        <label for="train[]" class="md-button md-raised md-primary">Choose Train Files</label>
+      </div>
+      <div layout="column" layout-align="start center" flex="20">
+        <md-button class="md-icon-button md-button md-raised md-primary md-mini" aria-label="Done" type="submit" ng-disabled="Pred.categoryName.length == 0 || train.length == 0" ng-submit="Pred.uploadTrainFile()">
+          <md-icon>done</md-icon>
+        </md-button>
+      </div>
+    </div>
+    <hr>
+    <div layout-gt-sm="row">
+      <div class="md-block" md-no-float="" flex="10">
+        <input type="button" ng-click="Pred.retrain()" class="md-button md-raised md-primary" value="Retrain">
+      </div>
+    </div>
+  </form>
+  <hr>
+  <div>
+    <h1>Train Files - {{Pred.trainedType}} - {{Pred.trainImages.length}} Items</h1>
+    <div layout="row" layout-align="space-between center">
+      <span>Select trained type image file</span>
+      <md-select ng-model="Pred.trainedType" placeholder="{{Pred.trainedType}}" class="md-no-underline" ng-change="Pred.getTrainedImages(false, Pred.trainedType)">
+        <md-option ng-value="tt" ng-repeat="tt in Pred.trainedTypes">{{tt}}</md-option>
+      </md-select>
+    </div>
+    <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+      <md-grid-tile class="green" ng-repeat="ti in Pred.trainImages">
+        <img ng-src="{{ti.path}}" layout-fill>
+        <md-grid-tile-footer>
+          <h3>{{ti.name}}</h3>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+  <hr>
+</div>

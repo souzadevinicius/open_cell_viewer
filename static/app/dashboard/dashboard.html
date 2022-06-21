@@ -1,0 +1,315 @@
+<md-card ng-if='Dash.detection && Dash.original'>
+  <md-card-header>
+    <md-card-avatar>
+      <img src="/public/imgs/heart.png" />
+    </md-card-avatar>
+    <md-card-header-text>
+      <span class="md-title">Segmentation</span>
+      <span class="md-subhead"> Counter</span>
+    </md-card-header-text>
+  </md-card-header>
+  <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <md-card md-theme="{{'dark-grey' }}" md-theme-watch>
+        <img ng-src="{{Dash.original}}" class="md-card-image" alt="Original" width="50%" height="50%">
+      </md-card>
+    </div>
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <img ng-src="{{Dash.segmentation}}" class="md-card-image" alt="Segmented" width="50%" height="50%">
+      </md-card>
+    </div>
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <img ng-src="{{Dash.contour}}" class="md-card-image" alt="{{Dash.detection}}" width="50%" height="50%">
+      </md-card>
+    </div>
+  </md-content>
+</md-card>
+
+
+<!-- <div flex-gt-sm="98" flex>
+
+  <md-toolbar layout="row" class="md-hue-2">
+    <div class="md-toolbar-tools">
+      <span>Uploaded Images</span>
+    </div>
+  </md-toolbar>
+
+  <md-content>
+    <md-list flex>
+      <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
+      <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
+        <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ item.who }}</h3>
+          <h4>{{ item.what }}</h4>
+          <p>{{ item.notes }}</p>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+      <md-subheader class="md-no-sticky">2 line item</md-subheader>
+      <md-list-item class="md-2-line">
+        <img ng-src="{{todos[0].face}}?20" class="md-avatar" alt="{{todos[0].who}}" />
+        <div class="md-list-item-text">
+          <h3>{{ todos[0].who }}</h3>
+          <p>Secondary text</p>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+      <md-subheader class="md-no-sticky">3 line item, long paragraph (see on mobile)</md-subheader>
+      <md-list-item class="md-3-line md-long-text">
+        <img ng-src="{{todos[0].face}}?25" class="md-avatar" alt="{{todos[0].who}}" />
+        <div class="md-list-item-text">
+          <h3>{{ todos[0].who }}</h3>
+          <p>
+            Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia
+            nostra, per inceptos himenaeos.
+          </p>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-3-line md-long-text">
+        <img ng-src="{{todos[1].face}}?25" class="md-avatar" alt="{{todos[1].who}}" />
+        <div class="md-list-item-text">
+          <h3>{{ todos[1].who }}</h3>
+          <p>
+            Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litra torquent per conubia
+            nostra, per inceptos himenaeos.
+          </p>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+      <md-subheader class="md-no-sticky">Classes</md-subheader>
+      <md-list-item class="md-2-line" ng-repeat="phone in phones">
+        <md-icon md-svg-icon="{{phone.options.icon}}" ng-if="phone.options.icon" ng-class="{'md-avatar-icon': phone.options.avatarIcon}"></md-icon>
+        <img ng-src="{{phone.options.face}}?25" class="md-avatar" alt="{{phone.options.face}}" ng-if="phone.options.face" />
+        <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }">
+          <h3> {{ phone.number }} </h3>
+          <p> {{ phone.type }} </p>
+        </div>
+        <md-button class="md-secondary md-icon-button" ng-click="doSecondaryAction($event)" ng-if="phone.options.actionIcon" aria-label="call">
+          <md-icon md-svg-icon="{{phone.options.actionIcon}}"></md-icon>
+        </md-button>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</div> -->
+
+<!-- <h4>Total {{Dash.detection}} {{Dash.results}}</h4> -->
+
+
+
+<div layout="row" layout-align="space-between center">
+  <span>Select detecion method</span>
+  <md-select ng-model="Dash.detection" ng-init="Dash.detection = Dash.detectionTypes[0]" placeholder="{{Dash.detection}}" class="md-no-underline" ng-change="Dash.uploadFile()">
+    <md-option ng-value="tt" ng-repeat="tt in Dash.detectionTypes">{{tt}}</md-option>
+  </md-select>
+</div>
+
+
+<div ng-if='Dash.results'>
+  <md-toolbar layout="row" class="md-hue">
+    <div class="md-toolbar-tools">
+      <span>Results</span>
+    </div>
+  </md-toolbar>
+  <div ng-repeat="r in Dash.results">
+    <div><label for="">Name: </label> {{r.name}}</div>
+    <div><label for="">Total Points </label> {{r.results}}</div>
+  </div>
+  <md-divider></md-divider>
+</div>
+
+<div ng-if='Dash.detection'>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Options</span>
+    </md-card-title-text>
+  </md-card-title>
+  <color-map colormap="Dash.cm" change="Dash.uploadFile()" ng-init="Dash.cm = Dash.cm || ''"></color-map>
+  <label>Filter By Color</label>
+  <input colorpicker="rgb" ng-model="Dash.colorMask" />
+</div>
+
+<div ng-if="Dash.detection == 'circle'">
+
+  <!--  -->
+  <div class="md-padding" layout-xs="column" layout="row">
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Min Distance {{Dash.minDistance}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.minDistance" aria-label="minDistance" id="minDistance-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.minDistance" ng-init="Dash.minDistance = 50" aria-label="minDistance" aria-controls="minDistance-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Min Circle Radius {{Dash.minRadius}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.minRadius" ng-init="Dash.minRadius = 5" aria-label="maxThreshold" id="maxThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.minRadius" aria-label="minRadius" aria-controls="minRadius-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Max Circle Radius {{Dash.maxRadius}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.maxRadius" ng-init="Dash.maxRadius = 50" aria-label="maxRadius" id="maxRadius-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.maxRadius" aria-label="maxRadius" aria-controls="maxRadius-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+  </div>
+  <!--  -->
+  <div class="md-padding" layout-xs="column" layout="row">
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Denoise {{Dash.denoise}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.denoise" aria-label="denoise" id="maxArcLength-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-init="Dash.denoise = 5" ng-model="Dash.denoise" aria-label="denoise" aria-controls="maxArcLength-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Min Threshold {{Dash.minThreshold}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.minThreshold" aria-label="minThreshold" id="minThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.minThreshold" ng-init="Dash.minThreshold = 50" aria-label="minThreshold" aria-controls="minThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+    <div flex-xs flex-gt-xs="33" layout="column">
+      <h4>Max Threshold {{Dash.maxThreshold}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.maxThreshold" ng-init="Dash.maxThreshold = 20" aria-label="maxThreshold" id="maxThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.maxThreshold" aria-label="maxThreshold" aria-controls="maxThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <!--  -->
+  </div>
+  <!--  -->
+</div>
+<div ng-if="Dash.detection == 'contour'">
+  <div class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>Min Threshold {{Dash.minThreshold}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.minThreshold" aria-label="minThreshold" id="minThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.minThreshold" ng-init="Dash.minThreshold = 50" aria-label="minThreshold" aria-controls="minThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>Max Threshold {{Dash.maxThreshold}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.maxThreshold" ng-init="Dash.maxThreshold = 125" aria-label="maxThreshold" id="maxThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.maxThreshold" aria-label="maxThreshold" aria-controls="maxThreshold-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+  </div>
+  <div class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>Denoise {{Dash.denoise}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.denoise" aria-label="denoise" id="maxArcLength-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-init="Dash.denoise = 0" ng-model="Dash.denoise" aria-label="denoise" aria-controls="maxArcLength-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>N° Iterations{{Dash.numberIter}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.numberIter" aria-label="numberIter" id="numberIter-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.numberIter" ng-init="Dash.numberIter = 2" aria-label="numberIter" aria-controls="numberIter-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+  </div>
+  <div class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>Min Area {{Dash.minArea}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.minArea" aria-label="minArea" id="minArea-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.minArea" ng-init="Dash.minArea = 5" aria-label="minArea" aria-controls="minArea-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <h4>Max Area {{Dash.maxArea}}</h4>
+      <md-slider-container>
+        <md-slider min="0" max="255" ng-model="Dash.maxArea" ng-init="Dash.maxArea = 50" aria-label="maxArea" id="maxArea-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-slider>
+        <md-input-container>
+          <input type="number" ng-model="Dash.maxArea" aria-label="maxArea" aria-controls="maxArea-slider" ng-model-options="{debounce:500}" ng-change="Dash.uploadFile()">
+        </md-input-container>
+      </md-slider-container>
+    </div>
+  </div>
+</div>
+
+
+<div layout="row" layout-align="end center" ng-if='Dash.detection'>
+  <form ng-submit="Dash.uploadFile()">
+    <input class="ng-hide" id="file[]" multiple type="file" ng-file="Dash.file" autofocus="autofocus" multiple="" />
+    <label for="file[]" class="md-button md-raised md-primary">Choose Files</label>
+    <md-button class="md-icon-button md-button md-raised md-primary" aria-label="Done" type="submit">
+      <md-icon>done</md-icon>
+    </md-button>
+  </form>
+</div>
+
+<!-- DIALOG COLORMAP TEMPLATE -->
+
+<script type="text/ng-template" id="dialog1.tmpl.html">
+  <md-dialog>
+    <form ng-cloak>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>Colormaps</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon aria-label="Close">close</md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <img alt="Colormaps" src="/public/imgs/colormaps/colormaps_h.png">
+        </div>
+      </md-dialog-content>
+    </form>
+  </md-dialog>
+</script>

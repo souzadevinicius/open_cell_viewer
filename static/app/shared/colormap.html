@@ -1,0 +1,17 @@
+<md-input-container class="md-block">
+  <md-checkbox name="cm" ng-model="cm" ng-change="delayChange(); colormap = cm ? colormap : undefined " ng-init="colormap = cm ? colormap : undefined ">
+    Use ColorMaps?
+  </md-checkbox>
+</md-input-container>
+<div layout="row" layout-align="space-between center" ng-show="cm">
+  <span>Select colormap {{colormap}}</span>
+  <md-select ng-model="colormap" placeholder="Select colormap" class="md-no-underline" flex="80" ng-change="delayChange()">
+    <md-optgroup label="{{cm[0]}}" ng-repeat="cm in colorMaps">
+      <md-option ng-value="c" ng-repeat="c in cm[1]">{{c}}</md-option>
+    </md-optgroup>
+  </md-select>
+  <span>&nbsp;</span>
+  <md-button class="md-raised" ng-click="showColormap()" flex-xs flex-gt-xs="20">
+    View Colormaps
+  </md-button>
+</div>

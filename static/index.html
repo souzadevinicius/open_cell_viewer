@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" ng-app="imageApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Image Processor</title>
+
+  <!-- build:css app/style.min.css -->
+  <link rel="stylesheet" href="/public/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/public/lib/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="/public/lib/angular/css/colorpicker.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- /build -->
+
+
+</head>
+
+<body layout="column" ng-controller="NavCtrl as vm" ng-cloak md-theme="{{$root.theme ? $root.theme : 'default'}}">
+  <md-toolbar layout="row" md-whiteframe="8">
+    <div class="md-toolbar-tools">
+      <md-button ng-click="vm.toggleNav()" hide-gt-md aria-label="Menu">
+        <md-icon>menu</md-icon>
+      </md-button>
+      <h3>IM - {{$root.title}}</h3>
+      <span flex></span>
+      <md-button aria-label="Opções" ng-click="vm.showListBottomSheet($event)">
+        <md-icon>more_vert</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section layout="row" flex>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="8">
+      <md-toolbar class="md-primary md-hue-1">
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+          <h5>{{$root.entidade.nome}}</h5>
+          <h6>{{$root.entidade.email}}</h6>
+        </div>
+      </md-toolbar>
+      <md-content role="navigation">
+        <ul class="side-menu">
+          <li ng-repeat="section in vm.menu.sections" class="parent-list-item" ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+            <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">{{section}}</h2>
+            <div ng-if="section.type === 'divider'">
+              <md-subheader>{{section.name}}</md-subheader>
+              <md-divider></md-divider>
+            </div>
+            <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+            <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+          </li>
+        </ul>
+      </md-content>
+    </md-sidenav>
+    <md-content flex style="padding-left: 40px; padding-right: 40px; padding-top: 5px" md-whiteframe="8">
+      <md-card>
+        <md-card-content>
+          <div ng-if="loading">
+            <div id="coverblur"></div>
+            <div style="position: fixed; top: 50%; left: 50%; z-index: 1000">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+          </div>
+          <!-- <md-tabs md-dynamic-height md-border-bottom md-center-tabs="true" ng-if="!$root.hideTabs" md-selected="$root.tabSelectedIndex">
+            <md-tab label="{{g.value}}" ng-repeat="(k,g) in vm.tabs" id="tab" ng-click="vm.switchTab(k)">
+              <md-subheader class="md-accent">{{vm.tabs[$root.tabSelectedIndex].value}}</md-subheader>
+            </md-tab>
+          </md-tabs> -->
+          <div ng-view id="view"></div>
+        </md-card-content>
+      </md-card>
+    </md-content>
+    <!-- <chat></chat> -->
+  </section>
+</body>
+<footer>
+  <!-- SCRIPTS -->
+  <!-- <script src='/socket.io/socket.io.js'></script> -->
+  <!-- build:js app/compiled.min.js -->
+  <script src='/public/lib/jquery/js/jquery.min.js'></script>
+  <script src='/public/lib/bootstrap/js/bootstrap.min.js'></script>
+  <script src='/public/lib/underscore/underscore.min.js'></script>
+  <script src="/public/lib/angular/js/angular.min.js"></script>
+  <script src="/public/lib/angular/js/angular-route.min.js"></script>
+  <script src="/public/lib/angular/js/angular-resource.min.js"></script>
+  <script src="/public/lib/angular/js/angular-cookies.min.js"></script>
+  <script src="/public/lib/angular/js/angular-locale_pt-br.min.js"></script>
+  <script src="/public/lib/angular/js/angular-animate.min.js"></script>
+  <script src="/public/lib/angular/js/angular-aria.min.js"></script>
+  <script src="/public/lib/angular/js/bootstrap-colorpicker-module.min.js"></script>
+  <script src="/public/lib/angular-material/angular-material.min.js"></script>
+
+  <!--APP-->
+  <script src='/public/app/app.js'></script>
+  <!--DASHBOARD-->
+  <script src='/public/app/dashboard/DashboardController.js'></script>
+  <!--PREDICT-->
+  <script src='/public/app/predict/PredictController.js'></script>
+  <!--IMAGE-->
+  <script src='/public/app/image/ImageController.js'></script>
+  <!--NAV-->
+  <script src='/public/app/nav/NavController.js'></script>
+  <!--SHARED-->
+  <script src='/public/app/shared/shared.js'></script>
+  <script src='/public/app/shared/colormap.directive.js'></script>
+  <!-- /build -->
+</footer>
+
+</html>

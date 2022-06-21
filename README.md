@@ -51,7 +51,7 @@ With the parameters below, the result was this: **13 circular areas found**.
 
 ## Image Prediction
 
-This webapplication also make image training and prediction, but it is in progress right now.
+This webapplication also make image training and prediction, but this feature is in progress right now.
 
 
 
